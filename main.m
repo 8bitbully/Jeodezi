@@ -1,14 +1,6 @@
 clc;clearvars;
 ellipsoid = ReferenceEllipsoid('hayford');
 
-% p = Pafta.PAFTA_50;
-% [B, L] = paftaParser(p , 39.5, 37);
-% 
-% [cidx, area, edge] = paftaEdge(p);
-% 
-% [x, y, z] = geog2geoc(ellipsoid,B(cidx), L(cidx));
-
-% [B2, L2] = parse50(p);
 %%
 % geocentric
 
