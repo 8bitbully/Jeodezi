@@ -1,0 +1,38 @@
+{
+	"_schemaVersion": "1.0.0",
+	
+	"ReferenceEllipsoid":{
+		"inputs":[
+			{"name":"ellipsoid", "kind":"required", "type":["char", "choices={'grs80', 'hayford'}"]}
+		]
+	},
+	"Ellipsoid.geog2geoc":{
+		"inputs":[
+			{"name":"ellipsoid", "kind":"required", "type":"Ellipsoid", "purpose":"Nivo Elipsoid"},
+			{"name":"Latitude", "kind":"required", "type":["numeric"], "purpose":"B"},
+			{"name":"Longtitude", "kind":"required", "type":["numeric"], "purpose":"L"},
+			{"name":"Latitude type", "kind":"flag", "type":["char", "choices={'geographic', 'geocentric','reduced'}"]},
+			{"name":"Elevation",  "kind":"flag", "type":["numeric"], "purpose":"h"}
+		]
+	},
+	"Ellipsoid.geoc2geog":{
+		"inputs":[
+			{"name":"ellipsoid", "kind":"required", "type":"Ellipsoid", "purpose":"Nivo Elipsoid"},
+			{"name":"Geocentric X", "kind":"required", "type":["numeric"], "purpose":"X"},
+			{"name":"Geocentric Y", "kind":"required", "type":["numeric"], "purpose":"Y"},
+			{"name":"Geocentric Z", "kind":"required", "type":["numeric"], "purpose":"Z"}
+		]
+	},
+	"Ellipsoid.dist2eqlat":{
+		"inputs":[
+			{"name":"Ellipsoid", "kind":"required", "type":"Ellipsoid", "purpose":"Nivo Elipsoid"},
+			{"name":"Distance", "kind":"required", "type":["numeric"], "purpose":"G"}
+		]
+	},
+	"Ellipsoid.lat2eqdist":{
+		"inputs":[
+			{"name":"Ellipsoid", "kind":"required", "type":"Ellipsoid", "purpose":"Nivo Elipsoid"},
+			{"name":"Latitude", "kind":"required", "type":["numeric"], "purpose":"B"}
+		]
+	}
+}
