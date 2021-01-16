@@ -9,10 +9,10 @@
 %   uygulanmalidir. Aksi halde yanlıs sonuclar elde edilebilir.
 % """
 %       2--------------3
-%       |                   |
-%       |   100000    |
-%       |                   |
-%       |                   |
+%       |              |
+%       |   100000     |
+%       |              |
+%       |              |
 %      [1]-------------4
 %
 %       paf = Pafta.PAFTA_100;

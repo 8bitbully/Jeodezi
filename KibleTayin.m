@@ -109,6 +109,72 @@ classdef KibleTayin
             B = rad2deg(Bf) + (B2 * y^2) + (B4 * y^4);
             L = l + (B1 * y) + (B3 * y^3) + (B5 * y^5); % l + l_; [Lo + l]
         end
+
+        %
+        %
+        %
+        %
+        %
+        function [A1_2, A2_1, S, varargout] = geographicJTP2(this ,phi, lambda, phi_, lambda_)
+            R_ = this.R;
+            phi = deg2rad(phi);
+            lambda = deg2rad(lambda);
+            phi_ = deg2rad(phi_);
+            lambda_ = deg2rad(lambda_);
+
+            dLambda = lambda_ - lambda;
+
+            A1_2 = pi - atan((cos(phi) * tan(phi_) - sin(phi) * cos(dLambda)) / ...
+                (sin(dLambda) + 1e-13)) - pi/2 * marking(sin(dLambda) + 1e-13);
+
+            isA2_1 = (pi - atan((cos(dLambda) * sin(phi_) - tan(phi) * cos(phi_))/ (sin(dLambda) + 1e-13)) - ...
+            pi/2 * marking(sin(dLambda) + 1e-13)) < pi;
+
+            if isA2_1
+                A2_1 = (pi - atan((cos(dLambda) * sin(phi_) - tan(phi) * cos(phi_)) / (sin(dLambda) + 1e-13)) - ...
+                pi/2 * marking(sin(dLambda) + 1e-13)) + pi;
+            else
+                A2_1 = (pi - atan((cos(dLambda) * sin(phi_) - tan(phi) * cos(phi_)) / (sin(dLambda) + 1e-13)) - ...
+                pi/2 * marking(sin(dLambda) + 1e-13)) - pi;
+            end
+
+            S = R_ * acos(sin(phi_) * sin(phi) + cos(phi_) * cos(phi) * cos(dLambda));
+
+            A1_2 = rad2deg(A1_2);
+            A2_1 = rad2deg(A2_1);
+            S = round(S, 3);
+
+            varargout{1} = rad2deg(dLambda);
+        end
+
+        %
+        %
+        %
+        %
+        %
+        function [phi_, lambda_, A2_1] = geographicJTP1(this, phi, lambda, azimuth, S)
+            R_ = this.R;
+
+            phi = deg2rad(phi);
+            lambda = deg2rad(lambda);
+            azimuth = deg2rad(azimuth);
+
+            phi_ = asin(sin(phi) * cos(S / R_) + cos(phi) * sin(S / R_) * cos(azimuth));
+            lambda_ = atan(sin(azimuth)/(cos(phi) / tan(S / R_) - sin(phi) * cos(azimuth))) + lambda;
+
+            if azimuth < pi
+                A2_1 = (pi - atan((cos(azimuth) * cos(S / R_) - tan(phi) * sin(S / R_)) / (sin(azimuth) + 1e-13)) - ...
+                pi/2 * marking(sin(azimuth) + 1e-13)) + pi;
+            else
+                A2_1 = (pi - atan((cos(azimuth) * cos(S / R_) - tan(phi) * sin(S / R_)) / (sin(azimuth) + 1e-13)) - ...
+                pi/2 * marking(sin(azimuth) + 1e-13)) - pi;
+            end
+
+            phi_ = rad2deg(phi_);
+            lambda_ = rad2deg(lambda_);
+            A2_1 = rad2deg(A2_1);
+        end
+
     end
     
 end
